@@ -7,6 +7,11 @@ let snakeArr = [
 ]
 let food = {x:2,y:10}
 
+const gameOverEl = document.querySelector('.game-over');
+const scoreEl = document.querySelector('.cuurent');
+const highScoreEl = document.  querySelector('.high');
+const playAgainBtn = document.querySelector('.play-again');
+
 
 // game functions
 function main(ctime){
@@ -37,9 +42,12 @@ function isCollide(snake){
 function gameEngine(){
     // updating the snake array and food
     if(isCollide(snakeArr)){
-        alert(`Game over , your score is ${score}`);
+        gameOverEl.classList.remove('hide');
+        scoreEl.innerHTML = `🍎 : ${score}`;
+        highScoreEl.innerHTML = `🏆 : ${hiscore}`;
+
         score = 0;
-        scoreBox.innerHTML = "🐞: "+ 0
+        scoreBox.innerHTML = "🍎 : "+ 0
         velocity = {x:0 , y:0};
        
         snakeArr = [{x:1,y:1}]
@@ -48,7 +56,7 @@ function gameEngine(){
 
     if(snakeArr[0].x === food.x && snakeArr[0].y === food.y){
         score += 1 ;
-        scoreBox.innerHTML = "🐞: " + score;
+        scoreBox.innerHTML = "🍎 : " + score;
         if(score > hiscorevalue){
             hiscorevalue = score;
             localStorage.setItem("🏆",JSON.stringify(hiscorevalue));
@@ -97,6 +105,17 @@ function gameEngine(){
     board.appendChild(foodElement);
 
 }
+
+// Restart game
+playAgainBtn.addEventListener('click',restartGame);
+
+function restartGame(){
+    gameOverEl.classList.add('hide');
+     main();
+}
+
+
+
 
 //main game logic
 let hiscore = localStorage.getItem("🏆") ;
